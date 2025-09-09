@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>¡Bienvenido!</title>
+  <style>
+    :root{
+      --bg:#0f172a;      /* slate-900 */
+      --card:#111827;    /* gray-900 */
+      --text:#e5e7eb;    /* gray-200 */
+      --muted:#9ca3af;   /* gray-400 */
+      --accent:#22c55e;  /* green-500 */
+      --accent-2:#38bdf8;/* sky-400 */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; display:grid; place-items:center; 
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
+      background: radial-gradient(1200px 800px at 20% 10%, #111827 0%, transparent 60%),
+                  radial-gradient(900px 600px at 80% 90%, #0b1220 0%, transparent 60%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .card{
+      width:min(680px, 92vw);
+      background: linear-gradient(180deg, #111827 0%, #0b1220 100%);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px; 
+      padding:32px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      text-align:center;
+    }
+    h1{font-size: clamp(28px, 4vw, 38px); margin: 0 0 8px 0}
+    p{margin:8px 0; line-height:1.6}
+    .muted{color:var(--muted)}
+    .btn{
+      display:inline-block; margin-top:18px; padding:14px 22px; 
+      font-weight:600; text-decoration:none; color:#08120b;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 14px; border: none; cursor:pointer;
+      transition: transform .08s ease-in-out, filter .15s ease;
+    }
+    .btn:active{ transform: scale(.98) }
+    .link{color:var(--accent-2); text-decoration:underline; cursor:pointer}
+    .count{font-variant-numeric: tabular-nums; font-weight:700}
+    .footer{font-size:12px; margin-top:18px}
+  </style>
+  <script>
+    // 🔗 1) Pega aquí el ENLACE COMPARTIDO de tu carpeta de Google Drive
+    //    (Asegúrate de que esté en "Cualquier persona con el enlace - Lector")
+    const DRIVE_URL = "https://drive.google.com/drive/folders/15WFnkNIELi74ql96u-mDAiwsszvhI98L?usp=drive_link";
+
+    // ⏱️ 2) Cambia cuántos segundos quieres mostrar el mensaje antes de entrar
+    let seconds = 5;
+
+    function goNow(){
+      window.location.href = DRIVE_URL;
+    }
+
+    function startCountdown(){
+      const el = document.getElementById('countdown');
+      el.textContent = seconds;
+      const iv = setInterval(()=>{
+        seconds -= 1;
+        el.textContent = seconds;
+        if (seconds <= 0){
+          clearInterval(iv);
+          goNow();
+        }
+      }, 1000);
+    }
+
+    window.addEventListener('DOMContentLoaded', startCountdown);
+  </script>
+</head>
+<body>
+  <main class="card" role="main" aria-live="polite">
+    <h1>¡Bienvenido!</h1>
+    <p>Gracias por visitar. En unos <span id="countdown" class="count">5</span> segundos te llevaremos a la carpeta.</p>
+    <p class="muted">Si prefieres no esperar, puedes entrar de inmediato con el botón:</p>
+    <button class="btn" onclick="goNow()">Entrar ahora</button>
+    <p class="footer muted">Si no eres redirigido automáticamente, <span class="link" onclick="goNow()">haz clic aquí</span>.</p>
+  </main>
+</body>
+</html>
